@@ -1,0 +1,1214 @@
+modbus:
+  - name: Maico KWL
+    type: tcp
+    host: 192.168.178.157
+    port: 502
+    delay: 2
+    timeout: 5
+    sensors:
+      - name: Maico Sprache
+        unique_id: maico.language
+        slave: 1
+        address: 108
+        scan_interval: 10
+        # format: ''
+        # comment: 0=deutsch; 1=englisch; 2=französisch; 3= italienisch
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 3
+      - name: Maico Raumtempauswahl
+        unique_id: maico.room_temperature_choice
+        slave: 1
+        address: 109
+        scan_interval: 10
+        # format: ''
+        # comment: 0=Komfort-BDE; 1=Extern; 2=Intern; 3= Bus
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 3
+      - name: Maico Filterstand Gerätefilter
+        unique_id: maico.filter_level_device_filter
+        slave: 1
+        address: 150
+        scan_interval: 10
+        # format: Monate
+        # comment: ''
+        input_type: holding
+        data_type: uint16
+        min_value: 3
+        max_value: 12
+      - name: Maico Filterstand Aussenfilter
+        unique_id: maico.filter_level_outdoor_filter
+        slave: 1
+        address: 151
+        scan_interval: 10
+        # format: Monate
+        # comment: ''
+        input_type: holding
+        data_type: uint16
+        min_value: 3
+        max_value: 18
+      - name: Maico Filterstand Raumfilter
+        unique_id: maico.filter_level_indoor_filter
+        slave: 1
+        address: 152
+        scan_interval: 10
+        # format: Monate
+        # comment: ''
+        input_type: holding
+        data_type: uint16
+        min_value: 1
+        max_value: 6
+      - name: Maico Dauer Lüftungsstufe
+        unique_id: maico.duration_ventilation_level
+        slave: 1
+        address: 153
+        scan_interval: 10
+        # format: Minute
+        # comment: ''
+        input_type: holding
+        data_type: uint16
+        min_value: 5
+        max_value: 90
+      - name: Maico Volumenstrom Reduzierte Lüftung
+        unique_id: maico.duration_reduced_ventilation_level
+        slave: 1
+        address: 154
+        scan_interval: 10
+        unit_of_measurement: m³/h
+        # comment: '* Grenzwerte sind vom Gerätetyp abhängig'
+        input_type: holding
+        data_type: uint16
+        min_value: 80
+        max_value: 300
+      - name: Maico Volumenstrom Nennlüftung
+        unique_id: maico.ventilation_volume_flow_nominal
+        slave: 1
+        address: 155
+        scan_interval: 10
+        unit_of_measurement: m³/h
+        # comment: '* Grenzwerte sind vom Gerätetyp abhängig'
+        input_type: holding
+        data_type: uint16
+        min_value: 80
+        max_value: 300
+      - name: Maico Volumenstrom Intensivlüftung
+        unique_id: maico.ventilation_volume_flow_intensive
+        slave: 1
+        address: 156
+        scan_interval: 10
+        unit_of_measurement: m³/h
+        # comment: '* Grenzwerte sind vom Gerätetyp abhängig'
+        input_type: holding
+        data_type: uint16
+        min_value: 80
+        max_value: 300
+      - name: Maico Abgleich Raumtemperatur
+        unique_id: maico.temperature_adjustment_room
+        slave: 1
+        address: 300
+        scan_interval: 10
+        unit_of_measurement: °C
+        # comment: Schrittweite 1 (= 0,1°C), * 10
+        input_type: holding
+        data_type: int16
+        min_value: -30
+        max_value: 30
+      - name: Maico T-Zuluft min. kühle
+        unique_id: maico.temperature_min_supply_air_cooling
+        slave: 1
+        address: 301
+        scan_interval: 10
+        unit_of_measurement: °C
+        # comment: Schrittweite 1 (= 0,1°C)
+        input_type: holding
+        data_type: int16
+        min_value: 8
+        max_value: 29
+      - name: Maico T-Raum max.
+        unique_id: maico.temperature_room_max
+        slave: 1
+        address: 302
+        scan_interval: 10
+        unit_of_measurement: °C
+        device_class: temperature
+        # format: Temperatur * 10 (°C)
+        # comment: Schrittweite 5 (= 0,5°C)
+        input_type: holding
+        data_type: int16
+        min_value: 180
+        max_value: 300
+        scale: 0.1
+      - name: Maico Aktueller Fehler High
+        unique_id: maico.current_error_high
+        slave: 1
+        address: 401
+        scan_interval: 10
+        # format: Bitfeld
+        # comment: High-Word Fehler
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 65535
+      - name: Maico Aktueller Fehler Low
+        unique_id: maico.current_error_low
+        slave: 1
+        address: 402
+        scan_interval: 10
+        # format: Bitfeld
+        # comment: Low-Word Fehler
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 65535
+      - name: Maico Aktueller Hinweis High
+        unique_id: maico.current_note_high
+        slave: 1
+        address: 403
+        scan_interval: 10
+        # format: Bitfeld
+        # comment: High-Word Hinweis
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 65535
+      - name: Maico Aktueller Hinweis Low
+        unique_id: maico.current_note_low
+        slave: 1
+        address: 404
+        scan_interval: 10
+        # format: Bitfeld
+        # comment: Low-Word Hinweis
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 65535
+      - name: Maico Betriebsart
+        slave: 1
+        address: 550
+        scan_interval: 10
+        # format: ''
+        # comment: >-
+        #  0=Aus; 1=Manuell; 2=Auto-Zeit; 3= Auto-Sensor; 4=Eco-Zuluft;
+        #  5=Eco-Abluft
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 5
+      - name: Maico Solltemperatur Raum
+        slave: 1
+        address: 553
+        scan_interval: 10
+        unit_of_measurement: °C
+        device_class: temperature
+        # format: Temperatur * 10 (°C)
+        # comment: Schrittweite 5 (= 0,5°C)
+        input_type: holding
+        data_type: int16
+        min_value: 180
+        max_value: 250
+        scale: 0.1
+      - name: Maico Lüftungstsufe
+        slave: 1
+        address: 554
+        scan_interval: 10
+        # format: ''
+        # comment: '0=Aus; 1=Feuchteschutz; 2=Reduziert; 3=Nenn; 4=Intensiv '
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 4
+      - name: Maico Aktuelle Lüftungsstufe
+        slave: 1
+        address: 650
+        scan_interval: 10
+        # format: ''
+        # comment: '0=Aus; 1=Feuchteschutz; 2=Reduziert; 3=Nenn; 4=Intensiv '
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 4
+      - name: Maico Aktuelle Drehzahl Ventilator ZUL
+        slave: 1
+        address: 651
+        scan_interval: 10
+        unit_of_measurement: U/min
+        # format:
+        # comment: ''
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 5000
+      - name: Maico Aktuelle Drehzahl Ventilator ABL
+        slave: 1
+        address: 652
+        scan_interval: 10
+        unit_of_measurement: U/min
+        # format: U/min
+        # comment: ''
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 5000
+      - name: Maico Aktueller Volumenstrom ZUL
+        slave: 1
+        address: 653
+        scan_interval: 10
+        unit_of_measurement: m³/h
+        # format: m³/h
+        # comment: ''
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 300
+      - name: Maico Aktueller Volumenstrom ABL
+        slave: 1
+        address: 654
+        scan_interval: 10
+        unit_of_measurement: m³/h
+        # format: m³/h
+        # comment: ''
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 300
+      - name: Maico Restlaufzeit Gerätefilter
+        slave: 1
+        address: 655
+        scan_interval: 10
+        # format: Tage
+        # comment: Restlaufzeit in Tage
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 366
+      - name: Maico Restlaufzeit Aussenfilter
+        slave: 1
+        address: 656
+        scan_interval: 10
+        # format: Tage
+        # comment: Restlaufzeit in Tage
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 549
+      - name: Maico Restlaufzeit Raumfilter
+        slave: 1
+        address: 657
+        scan_interval: 10
+        # format: Tage
+        # comment: Restlaufzeit in Tage
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 183
+      - name: Maico Temperatur Raum
+        slave: 1
+        address: 700
+        scan_interval: 10
+        unit_of_measurement: °C
+        device_class: temperature
+        # format: Temperatur * 10 (°C)
+        # comment: Anzeige gemäß Raumsensorkonfiguration
+        input_type: holding
+        data_type: int16
+        min_value: -300
+        max_value: 1200
+        scale: 0.1
+      - name: Maico Temperatur Raum Ext.
+        slave: 1
+        address: 701
+        scan_interval: 10
+        unit_of_measurement: °C
+        device_class: temperature
+        # format: Temperatur * 10 (°C)
+        # comment: Nur gültig, wenn ein externer Raumtemperatur Sensor konfiguriert ist
+        input_type: holding
+        data_type: int16
+        min_value: -300
+        max_value: 1200
+        scale: 0.1
+      - name: Maico Temperatur T-AUL vor Luft EWT
+        slave: 1
+        address: 702
+        scan_interval: 10
+        unit_of_measurement: °C
+        device_class: temperature
+        # format: Temperatur * 10 (°C)
+        # comment: Nur gültig, wenn ein Luft-EWT konfiguriert ist (ZP1)
+        input_type: holding
+        data_type: int16
+        min_value: -300
+        max_value: 1200
+        scale: 0.1
+      - name: Maico Temperatur Lufteintritt
+        slave: 1
+        address: 703
+        scan_interval: 10
+        unit_of_measurement: °C
+        device_class: temperature
+        # format: Temperatur * 10 (°C)
+        # comment: ''
+        input_type: holding
+        data_type: int16
+        min_value: -300
+        max_value: 1200
+        scale: 0.1
+      - name: Maico Temperatur Zuluft
+        slave: 1
+        address: 704
+        scan_interval: 10
+        unit_of_measurement: °C
+        device_class: temperature
+        # format: Temperatur * 10 (°C)
+        # comment: ''
+        input_type: holding
+        data_type: int16
+        min_value: -300
+        max_value: 1200
+        scale: 0.1
+      - name: Maico Temperatur Abluft
+        slave: 1
+        address: 705
+        scan_interval: 10
+        unit_of_measurement: °C
+        device_class: temperature
+        # format: Temperatur * 10 (°C)
+        # comment: ''
+        input_type: holding
+        data_type: int16
+        min_value: -300
+        max_value: 1200
+        scale: 0.1
+      - name: Maico Temperatur Fortluft
+        slave: 1
+        address: 706
+        scan_interval: 10
+        unit_of_measurement: °C
+        device_class: temperature
+        # format: Temperatur * 10 (°C)
+        # comment: ''
+        input_type: holding
+        data_type: int16
+        min_value: -300
+        max_value: 1200
+        scale: 0.1
+      - name: Maico T-Raum Bus
+        slave: 1
+        address: 707
+        scan_interval: 10
+        unit_of_measurement: °C
+        device_class: temperature
+        # format: Temperatur * 10 (°C)
+        # comment: >-
+        #  Nur gültig, wenn ein Bus Raumtemperatur Sensor konfiguriert ist /
+        #  Schreibzyklus min. 10min
+        # input_type: '-'
+        data_type: int16
+        min_value: -300
+        max_value: 1200
+        scale: 0.1
+      - name: Maico r.F. Abluft
+        slave: 1
+        address: 750
+        scan_interval: 10
+        unit_of_measurement: '%'
+        device_class: humidity
+        # format: relative Feuchte * 10 (%)
+        # comment: ''
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 1000
+      - name: Maico r.F. Sensor 1
+        slave: 1
+        address: 751
+        scan_interval: 10
+        unit_of_measurement: '%'
+        device_class: humidity
+        # format: relative Feuchte * 10 (%)
+        # comment: Nur gültig, wenn Sensor 1 als r.F. Sensor konfiguriert ist
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 1000
+      - name: Maico r.F. Sensor 2
+        slave: 1
+        address: 752
+        scan_interval: 10
+        unit_of_measurement: '%'
+        device_class: humidity
+        # format: relative Feuchte * 10 (%)
+        # comment: Nur gültig, wenn Sensor 2 als r.F. Sensor konfiguriert ist
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 1000
+      - name: Maico r.F. Sensor 3
+        slave: 1
+        address: 753
+        scan_interval: 10
+        unit_of_measurement: '%'
+        device_class: humidity
+        # format: relative Feuchte * 10 (%)
+        # comment: Nur gültig, wenn Sensor 3 als r.F. Sensor konfiguriert ist
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 1000
+      - name: Maico r.F. Sensor 4
+        slave: 1
+        address: 754
+        scan_interval: 10
+        unit_of_measurement: '%'
+        device_class: humidity
+        # format: relative Feuchte * 10 (%)
+        # comment: Nur gültig, wenn Sensor 4 als r.F. Sensor konfiguriert ist
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 1000
+      - name: Maico CO2 Sensor 1
+        slave: 1
+        address: 755
+        scan_interval: 10
+        unit_of_measurement: ppm
+        device_class: carbon_dioxide
+        # format: CO2-Konzentration * 10 (ppm)
+        # comment: Nur gültig, wenn Sensor 1 als CO2 Sensor konfiguriert ist
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 50000
+        scale: 0.1
+      - name: Maico CO2 Sensor 2
+        slave: 1
+        address: 756
+        scan_interval: 10
+        unit_of_measurement: ppm
+        device_class: carbon_dioxide
+        # format: CO2-Konzentration * 10 (ppm)
+        # comment: Nur gültig, wenn Sensor 2 als CO2 Sensor konfiguriert ist
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 50000
+        scale: 0.1
+      - name: Maico CO2 Sensor 3
+        slave: 1
+        address: 757
+        scan_interval: 10
+        unit_of_measurement: ppm
+        device_class: carbon_dioxide
+        # format: CO2-Konzentration * 10 (ppm)
+        # comment: Nur gültig, wenn Sensor 3 als CO2 Sensor konfiguriert ist
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 50000
+        scale: 0.1
+      - name: Maico CO2 Sensor 4
+        slave: 1
+        address: 758
+        scan_interval: 10
+        unit_of_measurement: ppm
+        device_class: carbon_dioxide
+        # format: CO2-Konzentration * 10 (ppm)
+        # comment: Nur gültig, wenn Sensor 4 als CO2 Sensor konfiguriert ist
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 50000
+        scale: 0.1
+      - name: Maico VOC Sensor 1
+        slave: 1
+        address: 759
+        scan_interval: 10
+        unit_of_measurement: ppm
+        device_class: carbon_dioxide
+        # format: VOC-Konzentration * 10 (ppm)
+        # comment: Nur gültig, wenn Sensor 1 als VOC Sensor konfiguriert ist
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 50000
+        scale: 0.1
+      - name: Maico VOC Sensor 2
+        slave: 1
+        address: 760
+        scan_interval: 10
+        unit_of_measurement: ppm
+        device_class: carbon_dioxide
+        # format: VOC-Konzentration * 10 (ppm)
+        # comment: Nur gültig, wenn Sensor 2 als VOC Sensor konfiguriert ist
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 50000
+        scale: 0.1
+      - name: Maico VOC Sensor 3
+        slave: 1
+        address: 761
+        scan_interval: 10
+        unit_of_measurement: ppm
+        device_class: carbon_dioxide
+        # format: VOC-Konzentration * 10 (ppm)
+        # comment: Nur gültig, wenn Sensor 3 als VOC Sensor konfiguriert ist
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 50000
+        scale: 0.1
+      - name: Maico VOC Sensor 4
+        slave: 1
+        address: 762
+        scan_interval: 10
+        unit_of_measurement: ppm
+        device_class: carbon_dioxide
+        # format: VOC-Konzentration * 10 (ppm)
+        # comment: Nur gültig, wenn Sensor 4 als VOC Sensor konfiguriert ist
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 50000
+        scale: 0.1
+      - name: Maico r.F. Bus
+        slave: 1
+        address: 763
+        scan_interval: 10
+        # format: ''
+        # comment: Schreibzyklus mindestens 10min
+        # input_type: '-'
+        data_type: uint16
+        min_value: 0
+        max_value: 100
+      - name: Maico LQ-Bus
+        slave: 1
+        address: 764
+        scan_interval: 10
+        # format: ''
+        # comment: Schreibzyklus mindestens 10min
+        # input_type: '-'
+        data_type: uint16
+        min_value: 0
+        max_value: 5000
+      - name: Maico Sole-Umwälzpumpe (ZP1)
+        slave: 1
+        address: 806
+        scan_interval: 10
+        # format: ''
+        # comment: 0=Aus; 1=heizen; 2=kühlen
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 2
+      - name: Maico 3-Wege-Luftklappe (ZP1)
+        slave: 1
+        address: 807
+        scan_interval: 10
+        # format: ''
+        # comment: 0=Aus; 1=heizen; 2=kühlen
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 2
+      - name: Maico Zonenklappe (ZP1)
+        slave: 1
+        address: 808
+        scan_interval: 10
+        # format: ''
+        # comment: 0=Aus; 1=Zone1; 2=Zone2; 3=Zone Sensor
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 3
+      - name: Maico Betriebsstunden Feuchteschutz LüftungHigh
+        unique_id: maico.operating_hours_humidity_protection_ventilation_high
+        slave: 1
+        address: 850
+        scan_interval: 10
+        unit_of_measurement: h
+        # format: Stunden
+        # comment: High-Word
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 65535
+      - name: Maico Betriebsstunden Feuchteschutz LüftungLow
+        unique_id: maico.operating_hours_humidity_protection_ventilation_low
+        slave: 1
+        address: 851
+        scan_interval: 10
+        unit_of_measurement: h
+        # format: Stunden
+        # comment: Low-Word
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 65535
+      - name: Maico Betriebsstunden Reduzierte LüftungHigh
+        unique_id: maico.operating_hours_reduced_ventilation_high
+        slave: 1
+        address: 852
+        scan_interval: 10
+        unit_of_measurement: h
+        # format: Stunden
+        # comment: High-Word
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 65535
+      - name: Maico Betriebsstunden Reduzierte LüftungLow
+        unique_id: maico.operating_hours_reduced_ventilation_low
+        slave: 1
+        address: 853
+        scan_interval: 10
+        unit_of_measurement: h
+        # format: Stunden
+        # comment: Low-Word
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 65535
+      - name: Maico Betriebsstunden NennlüftungHigh
+        unique_id: maico.operating_hours_nominal_ventilation_high
+        slave: 1
+        address: 854
+        scan_interval: 10
+        unit_of_measurement: h
+        # format: Stunden
+        # comment: High-Word
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 65535
+      - name: Maico Betriebsstunden NennlüftungLow
+        unique_id: maico.operating_hours_nominal_ventilation_low
+        slave: 1
+        address: 855
+        scan_interval: 10
+        unit_of_measurement: h
+        # format: Stunden
+        # comment: Low-Word
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 65535
+      - name: Maico Betriebsstunden Intensivlüftun High
+        unique_id: maico.operating_hours_intensive_ventilation_high
+        slave: 1
+        address: 856
+        scan_interval: 10
+        unit_of_measurement: h
+        # format: Stunden
+        # comment: High-Word
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 65535
+      - name: Maico Betriebsstunden IntensivlüftungLow
+        unique_id: maico.operating_hours_intensive_ventilation_low
+        slave: 1
+        address: 857
+        scan_interval: 10
+        unit_of_measurement: h
+        # format: Stunden
+        # comment: Low-Word
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 65535
+      - name: Maico Betriebsstunden Lüftung gesamtHigh
+        unique_id: maico.operating_hours_ventilation_total_high
+        slave: 1
+        address: 858
+        scan_interval: 10
+        unit_of_measurement: h
+        # format: Stunden
+        # comment: High-Word
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 65535
+      - name: Maico Betriebsstunden Lüftung gesamtLow
+        unique_id: maico.operating_hours_ventilation_total_low
+        slave: 1
+        address: 859
+        scan_interval: 10
+        unit_of_measurement: h
+        # format: Stunden
+        # comment: Low-Word
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 65535
+      - name: Maico Relais Nachheizung (ZP1) High
+        unique_id: maico.relais_night_heating_high
+        slave: 1
+        address: 860
+        scan_interval: 10
+        unit_of_measurement: h
+        # format: Stunden
+        # comment: High-Word
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 65535
+      - name: Maico Relais Nachheizung (ZP1) Low
+        unique_id: maico.relais_night_heating_low
+        slave: 1
+        address: 861
+        scan_interval: 10
+        unit_of_measurement: h
+        # format: Stunden
+        # comment: Low-Word
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 65535
+      - name: Maico Sole-Umwälzpumpe (ZP1)High
+        unique_id: maico.brine_circulation_pump_high
+        slave: 1
+        address: 862
+        scan_interval: 10
+        unit_of_measurement: h
+        # format: Stunden
+        # comment: High-Word
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 65535
+      - name: Maico Sole-Umwälzpumpe (ZP1)Low
+        unique_id: maico.brine_circulation_pump_low
+        slave: 1
+        address: 863
+        scan_interval: 10
+        unit_of_measurement: h
+        # format: Stunden
+        # comment: Low-Word
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 65535
+      - name: Maico 3-Wege-Luftklappe (ZP1) High
+        unique_id: maico.three_way_air_damper_high
+        slave: 1
+        address: 864
+        scan_interval: 10
+        unit_of_measurement: h
+        # format: Stunden
+        # comment: High-Word
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 65535
+      - name: Maico 3-Wege-Luftklappe (ZP1) Low
+        unique_id: maico.three_way_air_damper_low
+        slave: 1
+        address: 865
+        scan_interval: 10
+        unit_of_measurement: h
+        # format: Stunden
+        # comment: Low-Word
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 65535
+      - name: Maico Zonenklappe (ZP1) High
+        unique_id: maico.zone_damper_high
+        slave: 1
+        address: 866
+        scan_interval: 10
+        unit_of_measurement: h
+        # format: Stunden
+        # comment: High-Word
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 65535
+      - name: Maico Zonenklappe (ZP1) Low
+        unique_id: maico.zone_damper_low
+        slave: 1
+        address: 867
+        scan_interval: 10
+        unit_of_measurement: h
+        # format: Stunden
+        # comment: Low-Word
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 65535
+      - name: Maico Schaltkontakt High
+        unique_id: maico.switching_contact_high
+        slave: 1
+        address: 868
+        scan_interval: 10
+        unit_of_measurement: h
+        # format: Stunden
+        # comment: High-Word
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 65535
+      - name: Maico Schaltkontakt Low
+        unique_id: maico.switching_contact_low
+        slave: 1
+        address: 869
+        scan_interval: 10
+        unit_of_measurement: h
+        # format: Stunden
+        # comment: Low-Word
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 65535
+      - name: Maico Zulässiges Delta p Filterüberwachung
+        slave: 1
+        address: 900
+        scan_interval: 10
+        unit_of_measurement: '%'
+        # format: '%'
+        # comment: ''
+        input_type: holding
+        data_type: uint16
+        min_value: 10
+        max_value: 200
+    switches:
+      - name: Maico Lüfterstufe Aus sperren
+        slave: 1
+        address: 106
+        scan_interval: 10
+        # format: ''
+        # comment: 0=Aus möglich; 1=Aus gesperrt
+        command_on: 1
+        command_off: 0
+        write_type: holding
+      - name: Maico Verriegerlung BDE
+        slave: 1
+        address: 107
+        scan_interval: 10
+        # format: ''
+        # comment: 0=nicht verriegelt; 1=verriegelt
+        command_on: 1
+        command_off: 0
+        write_type: holding
+      - name: Maico Filterwechsel Gerätefilter
+        slave: 1
+        address: 157
+        scan_interval: 10
+        # format: ''
+        # comment: 1= Filter gewechselt
+        command_on: 1
+        command_off: 0
+        write_type: holding
+      - name: Maico Filterwechsel Außenfilter
+        slave: 1
+        address: 158
+        scan_interval: 10
+        # format: ''
+        # comment: 1= Filter gewechselt
+        command_on: 1
+        command_off: 0
+        write_type: holding
+      - name: Maico Filterwechsel Raumfilter
+        slave: 1
+        address: 159
+        scan_interval: 10
+        # format: ''
+        # comment: 1= Filter gewechselt
+        command_on: 1
+        command_off: 0
+        write_type: holding
+      - name: Maico Fehler Reset
+        slave: 1
+        address: 405
+        scan_interval: 10
+        # format: ''
+        # comment: 1= Fehler Reset
+        command_on: 1
+        command_off: 0
+        write_type: holding
+      - name: Maico Stoßlüftung
+        slave: 1
+        address: 551
+        scan_interval: 10
+        # format: ''
+        # comment: 0=inaktiv; 1=aktiv
+        command_on: 1
+        command_off: 0
+        write_type: holding
+      - name: Maico Jahreszeit
+        slave: 1
+        address: 552
+        scan_interval: 10
+        # format: ''
+        # comment: 0=Winter; 1=Sommer
+        command_on: 1
+        command_off: 0
+        write_type: holding
+      - name: Maico Ventilator Zuluft
+        slave: 1
+        address: 800
+        scan_interval: 10
+        # format: ''
+        # comment: 0=aus; 1=ein
+        command_on: 1
+        command_off: 0
+        write_type: holding
+      - name: Maico Ventilator Abluft
+        slave: 1
+        address: 801
+        scan_interval: 10
+        # format: ''
+        # comment: 0=aus; 1=ein
+        command_on: 1
+        command_off: 0
+        write_type: holding
+      - name: Maico Stellantrieb Sommerbypass
+        slave: 1
+        address: 802
+        scan_interval: 10
+        # format: ''
+        # comment: 0=zu; 1=auf
+        command_on: 1
+        command_off: 0
+        write_type: holding
+      - name: Maico PTC-Heizregister
+        slave: 1
+        address: 803
+        scan_interval: 10
+        # format: ''
+        # comment: 0=aus; 1=ein
+        command_on: 1
+        command_off: 0
+        write_type: holding
+      - name: Maico Schaltkontakt Basisplatine
+        slave: 1
+        address: 804
+        scan_interval: 10
+        # format: ''
+        # comment: 0=aus; 1=ein
+        command_on: 1
+        command_off: 0
+        write_type: holding
+      - name: Maico Relais Nachheizung (ZP1)
+        slave: 1
+        address: 805
+        scan_interval: 10
+        # format: ''
+        # comment: 0=aus; 1=ein
+        command_on: 1
+        command_off: 0
+        write_type: holding
+
+input_select:
+  sprache:
+    name: "Maico Sprache"
+    options:
+      - 'Deutsch'
+      - 'Englisch'
+      - 'Französisch'
+      - 'Italienisch'
+    icon: mdi:translate
+
+  raumtempauswahl:
+    name: "Maico Raumtempauswahl"
+    options:
+      - 'Komfort-BDE'
+      - 'Extern'
+      - 'Intern'
+      - 'Bus'
+    icon: mdi:thermometer
+
+  betriebsart:
+    name: "Maico Betriebsart"
+    options:
+      - 'Aus'
+      - 'Manuell'
+      - 'Auto-Zeit'
+      - 'Auto-Sensor'
+      - 'Eco-Zuluft'
+      - 'Eco-Abluft'
+    icon: mdi:cog
+
+  lueftungstufe:
+    name: "Maico Lüftungsstufe"
+    options:
+      - 'Aus'
+      - 'Feuchteschutz'
+      - 'Reduziert'
+      - 'Nenn'
+      - 'Intensiv'
+    icon: mdi:fan
+
+  aktuelle_lueftungsstufe:
+    name: "Maico Aktuelle Lüftungsstufe"
+    options:
+      - 'Aus'
+      - 'Feuchteschutz'
+      - 'Reduziert'
+      - 'Nenn'
+      - 'Intensiv'
+    icon: mdi:fan
+
+  sole_umwaelzpumpe_zp1:
+    name: "Maico Sole-Umwälzpumpe (ZP1)"
+    options:
+      - 'Aus'
+      - 'Heizen'
+      - 'Kühlen'
+    icon: mdi:pump
+
+  drei_wege_luftklappe_zp1:
+    name: "Maico 3-Wege-Luftklappe (ZP1)"
+    options:
+      - 'Aus'
+      - 'Heizen'
+      - 'Kühlen'
+    icon: mdi:air-filter
+
+  zonenklappe_zp1:
+    name: "Maico Zonenklappe (ZP1)"
+    options:
+      - 'Aus'
+      - 'Zone1'
+      - 'Zone2'
+      - 'Zone Sensor'
+    icon: mdi:home-floor-plan
+automation:
+  - id: "automation_sprache_update"
+    alias: "Update Sprache Modbus Register"
+    description: "Updates the Sprache holding register"
+    trigger:
+      - platform: state
+        entity_id: input_select.sprache
+    condition: []
+    action:
+      - service: modbus.write_register
+        data:
+          hub: "Maico KWL"
+          slave: 1
+          address: 108
+          value: >
+            {{ state_attr('input_select.sprache', 'options').index(states('input_select.sprache')) }}
+    mode: single
+  - id: "automation_raumtempauswahl_update"
+    alias: "Update Raumtempauswahl Modbus Register"
+    description: "Updates the Raumtempauswahl holding register"
+    trigger:
+      - platform: state
+        entity_id: input_select.raumtempauswahl
+    condition: []
+    action:
+      - service: modbus.write_register
+        data:
+          hub: "Maico KWL"
+          slave: 1
+          address: 109
+          value: >
+            {{ state_attr('input_select.raumtempauswahl', 'options').index(states('input_select.raumtempauswahl')) }}
+    mode: single
+
+  - id: "automation_betriebsart_update"
+    alias: "Update Betriebsart Modbus Register"
+    description: "Updates the Betriebsart holding register"
+    trigger:
+      - platform: state
+        entity_id: input_select.betriebsart
+    condition: []
+    action:
+      - service: modbus.write_register
+        data:
+          hub: "Maico KWL"
+          slave: 1
+          address: 550
+          value: >
+            {{ state_attr('input_select.betriebsart', 'options').index(states('input_select.betriebsart')) }}
+    mode: single
+
+  - id: "automation_lueftungstufe_update"
+    alias: "Update Lüftungsstufe Modbus Register"
+    description: "Updates the Lüftungsstufe holding register"
+    trigger:
+      - platform: state
+        entity_id: input_select.lueftungstufe
+    condition: []
+    action:
+      - service: modbus.write_register
+        data:
+          hub: "Maico KWL"
+          slave: 1
+          address: 554
+          value: >
+            {{ state_attr('input_select.lueftungstufe', 'options').index(states('input_select.lueftungstufe')) }}
+    mode: single
+
+  - id: "automation_aktuelle_lueftungsstufe_update"
+    alias: "Update Aktuelle Lüftungsstufe Modbus Register"
+    description: "Updates the Aktuelle Lüftungsstufe holding register"
+    trigger:
+      - platform: state
+        entity_id: input_select.aktuelle_lueftungsstufe
+    condition: []
+    action:
+      - service: modbus.write_register
+        data:
+          hub: "Maico KWL"
+          slave: 1
+          address: 650
+          value: >
+            {{ state_attr('input_select.aktuelle_lueftungsstufe', 'options').index(states('input_select.aktuelle_lueftungsstufe')) }}
+    mode: single
+
+  - id: "automation_sole_umwaelzpumpe_zp1_update"
+    alias: "Update Sole-Umwälzpumpe (ZP1) Modbus Register"
+    description: "Updates the Sole-Umwälzpumpe (ZP1) holding register"
+    trigger:
+      - platform: state
+        entity_id: input_select.sole_umwaelzpumpe_zp1
+    condition: []
+    action:
+      - service: modbus.write_register
+        data:
+          hub: "Maico KWL"
+          slave: 1
+          address: 806
+          value: >
+            {{ state_attr('input_select.sole_umwaelzpumpe_zp1', 'options').index(states('input_select.sole_umwaelzpumpe_zp1')) }}
+    mode: single
+
+  - id: "automation_drei_wege_luftklappe_zp1_update"
+    alias: "Update 3-Wege-Luftklappe (ZP1) Modbus Register"
+    description: "Updates the 3-Wege-Luftklappe (ZP1) holding register"
+    trigger:
+      - platform: state
+        entity_id: input_select.drei_wege_luftklappe_zp1
+    condition: []
+    action:
+      - service: modbus.write_register
+        data:
+          hub: "Maico KWL"
+          slave: 1
+          address: 807
+          value: >
+            {{ state_attr('input_select.drei_wege_luftklappe_zp1', 'options').index(states('input_select.drei_wege_luftklappe_zp1')) }}
+    mode: single
+
+  - id: "automation_zonenklappe_zp1_update"
+    alias: "Update Zonenklappe (ZP1) Modbus Register"
+    description: "Updates the Zonenklappe (ZP1) holding register"
+    trigger:
+      - platform: state
+        entity_id: input_select.zonenklappe_zp1
+    condition: []
+    action:
+      - service: modbus.write_register
+        data:
+          hub: "Maico KWL"
+          slave: 1
+          address: 808
+          value: >
+            {{ state_attr('input_select.zonenklappe_zp1', 'options').index(states('input_select.zonenklappe_zp1')) }}
+    mode: single
