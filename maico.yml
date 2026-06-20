@@ -33,6 +33,7 @@ modbus:
         slave: 1
         address: 150
         scan_interval: 10
+        unit_of_measurement: Monate
         # format: Monate
         # comment: ''
         input_type: holding
@@ -44,6 +45,7 @@ modbus:
         slave: 1
         address: 151
         scan_interval: 10
+        unit_of_measurement: Monate
         # format: Monate
         # comment: ''
         input_type: holding
@@ -55,6 +57,7 @@ modbus:
         slave: 1
         address: 152
         scan_interval: 10
+        unit_of_measurement: Monate
         # format: Monate
         # comment: ''
         input_type: holding
@@ -66,6 +69,7 @@ modbus:
         slave: 1
         address: 153
         scan_interval: 10
+        unit_of_measurement: min
         # format: Minute
         # comment: ''
         input_type: holding
@@ -116,7 +120,7 @@ modbus:
         data_type: int16
         min_value: -30
         max_value: 30
-      - name: Maico T-Zuluft min. kühle
+      - name: Maico T-Zuluft min. kühlen
         unique_id: maico.temperature_min_supply_air_cooling
         slave: 1
         address: 301
@@ -279,6 +283,7 @@ modbus:
         slave: 1
         address: 655
         scan_interval: 10
+        unit_of_measurement: d
         # format: Tage
         # comment: Restlaufzeit in Tage
         input_type: holding
@@ -289,6 +294,7 @@ modbus:
         slave: 1
         address: 656
         scan_interval: 10
+        unit_of_measurement: d
         # format: Tage
         # comment: Restlaufzeit in Tage
         input_type: holding
@@ -299,6 +305,7 @@ modbus:
         slave: 1
         address: 657
         scan_interval: 10
+        unit_of_measurement: d
         # format: Tage
         # comment: Restlaufzeit in Tage
         input_type: holding
@@ -579,6 +586,7 @@ modbus:
         slave: 1
         address: 763
         scan_interval: 10
+        unit_of_measurement: '%'
         # format: ''
         # comment: Schreibzyklus mindestens 10min
         input_type: holding
@@ -589,6 +597,7 @@ modbus:
         slave: 1
         address: 764
         scan_interval: 10
+        unit_of_measurement: ppm
         # format: ''
         # comment: Schreibzyklus mindestens 10min
         input_type: holding
@@ -625,7 +634,7 @@ modbus:
         data_type: uint16
         min_value: 0
         max_value: 3
-      - name: Maico Betriebsstunden Feuchteschutz LüftungHigh
+      - name: Maico Betriebsstunden Feuchteschutz Lüftung High
         unique_id: maico.operating_hours_humidity_protection_ventilation_high
         slave: 1
         address: 850
@@ -637,7 +646,7 @@ modbus:
         data_type: uint16
         min_value: 0
         max_value: 65535
-      - name: Maico Betriebsstunden Feuchteschutz LüftungLow
+      - name: Maico Betriebsstunden Feuchteschutz Lüftung Low
         unique_id: maico.operating_hours_humidity_protection_ventilation_low
         slave: 1
         address: 851
@@ -649,7 +658,7 @@ modbus:
         data_type: uint16
         min_value: 0
         max_value: 65535
-      - name: Maico Betriebsstunden Reduzierte LüftungHigh
+      - name: Maico Betriebsstunden Reduzierte Lüftung High
         unique_id: maico.operating_hours_reduced_ventilation_high
         slave: 1
         address: 852
@@ -661,7 +670,7 @@ modbus:
         data_type: uint16
         min_value: 0
         max_value: 65535
-      - name: Maico Betriebsstunden Reduzierte LüftungLow
+      - name: Maico Betriebsstunden Reduzierte Lüftung Low
         unique_id: maico.operating_hours_reduced_ventilation_low
         slave: 1
         address: 853
@@ -673,7 +682,7 @@ modbus:
         data_type: uint16
         min_value: 0
         max_value: 65535
-      - name: Maico Betriebsstunden NennlüftungHigh
+      - name: Maico Betriebsstunden Nennlüftung High
         unique_id: maico.operating_hours_nominal_ventilation_high
         slave: 1
         address: 854
@@ -685,7 +694,7 @@ modbus:
         data_type: uint16
         min_value: 0
         max_value: 65535
-      - name: Maico Betriebsstunden NennlüftungLow
+      - name: Maico Betriebsstunden Nennlüftung Low
         unique_id: maico.operating_hours_nominal_ventilation_low
         slave: 1
         address: 855
@@ -697,7 +706,7 @@ modbus:
         data_type: uint16
         min_value: 0
         max_value: 65535
-      - name: Maico Betriebsstunden Intensivlüftun High
+      - name: Maico Betriebsstunden Intensivlüftung High
         unique_id: maico.operating_hours_intensive_ventilation_high
         slave: 1
         address: 856
@@ -709,7 +718,7 @@ modbus:
         data_type: uint16
         min_value: 0
         max_value: 65535
-      - name: Maico Betriebsstunden IntensivlüftungLow
+      - name: Maico Betriebsstunden Intensivlüftung Low
         unique_id: maico.operating_hours_intensive_ventilation_low
         slave: 1
         address: 857
@@ -721,7 +730,7 @@ modbus:
         data_type: uint16
         min_value: 0
         max_value: 65535
-      - name: Maico Betriebsstunden Lüftung gesamtHigh
+      - name: Maico Betriebsstunden Lüftung gesamt High
         unique_id: maico.operating_hours_ventilation_total_high
         slave: 1
         address: 858
@@ -733,7 +742,7 @@ modbus:
         data_type: uint16
         min_value: 0
         max_value: 65535
-      - name: Maico Betriebsstunden Lüftung gesamtLow
+      - name: Maico Betriebsstunden Lüftung gesamt Low
         unique_id: maico.operating_hours_ventilation_total_low
         slave: 1
         address: 859
@@ -769,7 +778,7 @@ modbus:
         data_type: uint16
         min_value: 0
         max_value: 65535
-      - name: Maico Sole-Umwälzpumpe (ZP1)High
+      - name: Maico Sole-Umwälzpumpe (ZP1) High
         unique_id: maico.brine_circulation_pump_high
         slave: 1
         address: 862
@@ -781,7 +790,7 @@ modbus:
         data_type: uint16
         min_value: 0
         max_value: 65535
-      - name: Maico Sole-Umwälzpumpe (ZP1)Low
+      - name: Maico Sole-Umwälzpumpe (ZP1) Low
         unique_id: maico.brine_circulation_pump_low
         slave: 1
         address: 863
