@@ -636,6 +636,39 @@ modbus:
         data_type: uint16
         min_value: 0
         max_value: 3
+      - name: Maico Stellantrieb Sommerbypass Ist
+        unique_id: maico.summer_bypass_state
+        slave: 1
+        address: 802
+        scan_interval: 10
+        # format: ''
+        # comment: 0=zu; 1=auf (Abfrage Schaltzustände, read-only)
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 1
+      - name: Maico Stoßlüftung Ist
+        unique_id: maico.boost_ventilation_state
+        slave: 1
+        address: 551
+        scan_interval: 10
+        # format: ''
+        # comment: 0=inaktiv; 1=aktiv (Ist-Zustand, Register auch Schreibbefehl)
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 1
+      - name: Maico Jahreszeit Ist
+        unique_id: maico.season_state
+        slave: 1
+        address: 552
+        scan_interval: 10
+        # format: ''
+        # comment: 0=Winter; 1=Sommer (Ist-Zustand, Register auch Schreibbefehl)
+        input_type: holding
+        data_type: uint16
+        min_value: 0
+        max_value: 1
       - name: Maico Betriebsstunden Feuchteschutz Lüftung High
         unique_id: maico.operating_hours_humidity_protection_ventilation_high
         slave: 1
@@ -1015,6 +1048,99 @@ modbus:
         command_off: 0
         write_type: holding
 
+template:
+  - sensor:
+      - name: "Maico Betriebsstunden Feuchteschutz gesamt"
+        unique_id: maico.operating_hours_humidity_protection_total
+        unit_of_measurement: h
+        state_class: total_increasing
+        icon: mdi:clock-outline
+        state: >
+          {% set high = states('sensor.maico_betriebsstunden_feuchteschutz_luftung_high') %}
+          {% if high in ['unknown', 'unavailable'] %}
+            {% set high = states('sensor.betriebsstunden_feuchteschutz_luftung') %}
+          {% endif %}
+          {% set low = states('sensor.maico_betriebsstunden_feuchteschutz_luftung_low') %}
+          {% if low in ['unknown', 'unavailable'] %}
+            {% set low = states('sensor.maico_betriebsstunden_feuchteschutz_luftunglow') %}
+          {% endif %}
+          {{ high | int(0) * 65536 + low | int(0) }}
+      - name: "Maico Betriebsstunden Reduziert gesamt"
+        unique_id: maico.operating_hours_reduced_ventilation_total
+        unit_of_measurement: h
+        state_class: total_increasing
+        icon: mdi:clock-outline
+        state: >
+          {% set high = states('sensor.maico_betriebsstunden_reduzierte_luftung_high') %}
+          {% if high in ['unknown', 'unavailable'] %}
+            {% set high = states('sensor.betriebsstunden_reduzierte_luftung') %}
+          {% endif %}
+          {% set low = states('sensor.maico_betriebsstunden_reduzierte_luftung_low') %}
+          {% if low in ['unknown', 'unavailable'] %}
+            {% set low = states('sensor.maico_betriebsstunden_reduzierte_luftunglow') %}
+          {% endif %}
+          {{ high | int(0) * 65536 + low | int(0) }}
+      - name: "Maico Betriebsstunden Nenn gesamt"
+        unique_id: maico.operating_hours_nominal_ventilation_total
+        unit_of_measurement: h
+        state_class: total_increasing
+        icon: mdi:clock-outline
+        state: >
+          {% set high = states('sensor.maico_betriebsstunden_nennluftung_high') %}
+          {% if high in ['unknown', 'unavailable'] %}
+            {% set high = states('sensor.betriebsstunden_nennluftung') %}
+          {% endif %}
+          {% set low = states('sensor.maico_betriebsstunden_nennluftung_low') %}
+          {% if low in ['unknown', 'unavailable'] %}
+            {% set low = states('sensor.maico_betriebsstunden_nennluftunglow') %}
+          {% endif %}
+          {{ high | int(0) * 65536 + low | int(0) }}
+      - name: "Maico Betriebsstunden Intensiv gesamt"
+        unique_id: maico.operating_hours_intensive_ventilation_total
+        unit_of_measurement: h
+        state_class: total_increasing
+        icon: mdi:clock-outline
+        state: >
+          {% set high = states('sensor.maico_betriebsstunden_intensivluftung_high') %}
+          {% if high in ['unknown', 'unavailable'] %}
+            {% set high = states('sensor.betriebsstunden_intensivluftung') %}
+          {% endif %}
+          {% set low = states('sensor.maico_betriebsstunden_intensivluftung_low') %}
+          {% if low in ['unknown', 'unavailable'] %}
+            {% set low = states('sensor.maico_betriebsstunden_intensivluftunglow') %}
+          {% endif %}
+          {{ high | int(0) * 65536 + low | int(0) }}
+      - name: "Maico Betriebsstunden Lüftung gesamt"
+        unique_id: maico.operating_hours_ventilation_total
+        unit_of_measurement: h
+        state_class: total_increasing
+        icon: mdi:clock-outline
+        state: >
+          {% set high = states('sensor.maico_betriebsstunden_luftung_gesamt_high') %}
+          {% if high in ['unknown', 'unavailable'] %}
+            {% set high = states('sensor.betriebsstunden_luftung_gesamt') %}
+          {% endif %}
+          {% set low = states('sensor.maico_betriebsstunden_luftung_gesamt_low') %}
+          {% if low in ['unknown', 'unavailable'] %}
+            {% set low = states('sensor.maico_betriebsstunden_luftung_gesamtlow') %}
+          {% endif %}
+          {{ high | int(0) * 65536 + low | int(0) }}
+      - name: "Maico Jahreszeit"
+        unique_id: maico.season_text
+        icon: mdi:weather-sunny
+        state: >-
+          {% set v = states('sensor.maico_jahreszeit_ist') -%}
+          {%- if v == '1' -%}Sommer{%- elif v == '0' -%}Winter{%- else -%}Unbekannt{%- endif -%}
+  - binary_sensor:
+      - name: "Maico Stoßlüftung aktiv"
+        unique_id: maico.boost_ventilation_active
+        icon: mdi:fan-alert
+        state: "{{ states('sensor.maico_stossluftung_ist') == '1' }}"
+      - name: "Maico Sommerbetrieb aktiv"
+        unique_id: maico.summer_season_active
+        icon: mdi:weather-sunny
+        state: "{{ states('sensor.maico_jahreszeit_ist') == '1' }}"
+
 input_select:
   sprache:
     name: "Maico Sprache"
@@ -1135,6 +1261,29 @@ automation:
           address: 550
           value: >
             {{ state_attr('input_select.betriebsart', 'options').index(states('input_select.betriebsart')) }}
+    mode: single
+
+  - id: "automation_betriebsart_sync"
+    alias: "Sync Betriebsart from Modbus"
+    description: "Updates input_select when Maico reports the operating mode (read register 550)"
+    triggers:
+      - trigger: state
+        entity_id: sensor.maico_betriebsart
+      - trigger: homeassistant
+        event: start
+    conditions:
+      - condition: template
+        value_template: >
+          {{ states('sensor.maico_betriebsart') | int(-1) >= 0 and
+             states('sensor.maico_betriebsart') | int(-1) <
+             state_attr('input_select.betriebsart', 'options') | length }}
+    actions:
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.betriebsart
+        data:
+          option: >
+            {{ state_attr('input_select.betriebsart', 'options')[states('sensor.maico_betriebsart') | int(0)] }}
     mode: single
 
   - id: "automation_lueftungstufe_update"
