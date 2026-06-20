@@ -975,24 +975,6 @@ modbus:
         command_on: 1
         command_off: 0
         write_type: holding
-      - name: Maico Stoßlüftung
-        slave: 1
-        address: 551
-        scan_interval: 10
-        # format: ''
-        # comment: 0=inaktiv; 1=aktiv
-        command_on: 1
-        command_off: 0
-        write_type: holding
-      - name: Maico Jahreszeit
-        slave: 1
-        address: 552
-        scan_interval: 10
-        # format: ''
-        # comment: 0=Winter; 1=Sommer
-        command_on: 1
-        command_off: 0
-        write_type: holding
       - name: Maico Ventilator Zuluft
         slave: 1
         address: 800
@@ -1008,15 +990,6 @@ modbus:
         scan_interval: 10
         # format: ''
         # comment: 0=aus; 1=ein
-        command_on: 1
-        command_off: 0
-        write_type: holding
-      - name: Maico Stellantrieb Sommerbypass
-        slave: 1
-        address: 802
-        scan_interval: 10
-        # format: ''
-        # comment: 0=zu; 1=auf
         command_on: 1
         command_off: 0
         write_type: holding
@@ -1125,21 +1098,61 @@ template:
             {% set low = states('sensor.maico_betriebsstunden_luftung_gesamtlow') %}
           {% endif %}
           {{ high | int(0) * 65536 + low | int(0) }}
-      - name: "Maico Jahreszeit"
-        unique_id: maico.season_text
-        icon: mdi:weather-sunny
-        state: >-
-          {% set v = states('sensor.maico_jahreszeit_ist') -%}
-          {%- if v == '1' -%}Sommer{%- elif v == '0' -%}Winter{%- else -%}Unbekannt{%- endif -%}
-  - binary_sensor:
-      - name: "Maico Stoßlüftung aktiv"
-        unique_id: maico.boost_ventilation_active
-        icon: mdi:fan-alert
+  - switch:
+      - name: "Maico Stoßlüftung"
+        unique_id: maico.boost_ventilation_switch
+        icon: mdi:weather-windy
         state: "{{ states('sensor.maico_stossluftung_ist') == '1' }}"
-      - name: "Maico Sommerbetrieb aktiv"
-        unique_id: maico.summer_season_active
+        turn_on:
+          - action: modbus.write_register
+            data:
+              hub: "Maico KWL"
+              slave: 1
+              address: 551
+              value: 1
+        turn_off:
+          - action: modbus.write_register
+            data:
+              hub: "Maico KWL"
+              slave: 1
+              address: 551
+              value: 0
+      - name: "Maico Jahreszeit"
+        unique_id: maico.season_switch
         icon: mdi:weather-sunny
         state: "{{ states('sensor.maico_jahreszeit_ist') == '1' }}"
+        turn_on:
+          - action: modbus.write_register
+            data:
+              hub: "Maico KWL"
+              slave: 1
+              address: 552
+              value: 1
+        turn_off:
+          - action: modbus.write_register
+            data:
+              hub: "Maico KWL"
+              slave: 1
+              address: 552
+              value: 0
+      - name: "Maico Stellantrieb Sommerbypass"
+        unique_id: maico.summer_bypass_switch
+        icon: mdi:valve
+        state: "{{ states('sensor.maico_stellantrieb_sommerbypass_ist') == '1' }}"
+        turn_on:
+          - action: modbus.write_register
+            data:
+              hub: "Maico KWL"
+              slave: 1
+              address: 802
+              value: 1
+        turn_off:
+          - action: modbus.write_register
+            data:
+              hub: "Maico KWL"
+              slave: 1
+              address: 802
+              value: 0
 
 input_select:
   sprache:

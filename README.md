@@ -47,6 +47,9 @@ Restart Home Assistant.
 - `input_select` helpers for writable settings
 - Automations to sync helpers ↔ Modbus (modern `triggers` / `actions` syntax)
 - Read-only sync of `sensor.maico_aktuelle_luftungsstufe` → `input_select.aktuelle_lueftungsstufe`
+- Read-only sync of `sensor.maico_betriebsart` → `input_select.betriebsart`
+- Ist-Zustand für Stoßlüftung (551), Jahreszeit/Sommer (552), Sommerbypass (802)
+- Betriebsstunden als 32-Bit-Wert (High+Low Register kombiniert)
 
 ## Requirements
 
