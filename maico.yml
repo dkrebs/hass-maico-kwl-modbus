@@ -142,9 +142,10 @@ modbus:
         # comment: Schrittweite 5 (= 0,5°C)
         input_type: holding
         data_type: int16
-        min_value: 180
-        max_value: 300
+        min_value: 18
+        max_value: 30
         scale: 0.1
+        precision: 1
       - name: Maico Aktueller Fehler High
         unique_id: maico.current_error_high
         slave: 1
@@ -211,9 +212,10 @@ modbus:
         # comment: Schrittweite 5 (= 0,5°C)
         input_type: holding
         data_type: int16
-        min_value: 180
-        max_value: 250
+        min_value: 18
+        max_value: 25
         scale: 0.1
+        precision: 1
       - name: Maico Lüftungsstufe
         unique_id: maico.ventilation_level_write
         slave: 1
