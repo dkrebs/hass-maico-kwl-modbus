@@ -1,7 +1,7 @@
 modbus:
   - name: Maico KWL
     type: tcp
-    host: 192.168.178.157
+    host: !secret maico_host
     port: 502
     delay: 2
     timeout: 5
@@ -210,7 +210,8 @@ modbus:
         min_value: 180
         max_value: 250
         scale: 0.1
-      - name: Maico Lüftungstsufe
+      - name: Maico Lüftungsstufe
+        unique_id: maico.ventilation_level_write
         slave: 1
         address: 554
         scan_interval: 10
@@ -405,7 +406,7 @@ modbus:
         # comment: >-
         #  Nur gültig, wenn ein Bus Raumtemperatur Sensor konfiguriert ist /
         #  Schreibzyklus min. 10min
-        # input_type: '-'
+        input_type: holding
         data_type: int16
         min_value: -300
         max_value: 1200
@@ -580,7 +581,7 @@ modbus:
         scan_interval: 10
         # format: ''
         # comment: Schreibzyklus mindestens 10min
-        # input_type: '-'
+        input_type: holding
         data_type: uint16
         min_value: 0
         max_value: 100
@@ -590,7 +591,7 @@ modbus:
         scan_interval: 10
         # format: ''
         # comment: Schreibzyklus mindestens 10min
-        # input_type: '-'
+        input_type: holding
         data_type: uint16
         min_value: 0
         max_value: 5000
@@ -1081,12 +1082,11 @@ automation:
   - id: "automation_sprache_update"
     alias: "Update Sprache Modbus Register"
     description: "Updates the Sprache holding register"
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id: input_select.sprache
-    condition: []
-    action:
-      - service: modbus.write_register
+    actions:
+      - action: modbus.write_register
         data:
           hub: "Maico KWL"
           slave: 1
@@ -1097,12 +1097,11 @@ automation:
   - id: "automation_raumtempauswahl_update"
     alias: "Update Raumtempauswahl Modbus Register"
     description: "Updates the Raumtempauswahl holding register"
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id: input_select.raumtempauswahl
-    condition: []
-    action:
-      - service: modbus.write_register
+    actions:
+      - action: modbus.write_register
         data:
           hub: "Maico KWL"
           slave: 1
@@ -1114,12 +1113,11 @@ automation:
   - id: "automation_betriebsart_update"
     alias: "Update Betriebsart Modbus Register"
     description: "Updates the Betriebsart holding register"
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id: input_select.betriebsart
-    condition: []
-    action:
-      - service: modbus.write_register
+    actions:
+      - action: modbus.write_register
         data:
           hub: "Maico KWL"
           slave: 1
@@ -1131,12 +1129,11 @@ automation:
   - id: "automation_lueftungstufe_update"
     alias: "Update Lüftungsstufe Modbus Register"
     description: "Updates the Lüftungsstufe holding register"
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id: input_select.lueftungstufe
-    condition: []
-    action:
-      - service: modbus.write_register
+    actions:
+      - action: modbus.write_register
         data:
           hub: "Maico KWL"
           slave: 1
@@ -1145,32 +1142,29 @@ automation:
             {{ state_attr('input_select.lueftungstufe', 'options').index(states('input_select.lueftungstufe')) }}
     mode: single
 
-  - id: "automation_aktuelle_lueftungsstufe_update"
-    alias: "Update Aktuelle Lüftungsstufe Modbus Register"
-    description: "Updates the Aktuelle Lüftungsstufe holding register"
-    trigger:
-      - platform: state
-        entity_id: input_select.aktuelle_lueftungsstufe
-    condition: []
-    action:
-      - service: modbus.write_register
+  - id: "automation_aktuelle_lueftungsstufe_sync"
+    alias: "Sync Aktuelle Lüftungsstufe from Modbus"
+    description: "Updates input_select when Maico reports the current ventilation level (read register 650)"
+    triggers:
+      - trigger: state
+        entity_id: sensor.maico_aktuelle_luftungsstufe
+    actions:
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.aktuelle_lueftungsstufe
         data:
-          hub: "Maico KWL"
-          slave: 1
-          address: 650
-          value: >
-            {{ state_attr('input_select.aktuelle_lueftungsstufe', 'options').index(states('input_select.aktuelle_lueftungsstufe')) }}
+          option: >
+            {{ state_attr('input_select.aktuelle_lueftungsstufe', 'options')[states('sensor.maico_aktuelle_luftungsstufe') | int(0)] }}
     mode: single
 
   - id: "automation_sole_umwaelzpumpe_zp1_update"
     alias: "Update Sole-Umwälzpumpe (ZP1) Modbus Register"
     description: "Updates the Sole-Umwälzpumpe (ZP1) holding register"
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id: input_select.sole_umwaelzpumpe_zp1
-    condition: []
-    action:
-      - service: modbus.write_register
+    actions:
+      - action: modbus.write_register
         data:
           hub: "Maico KWL"
           slave: 1
@@ -1182,12 +1176,11 @@ automation:
   - id: "automation_drei_wege_luftklappe_zp1_update"
     alias: "Update 3-Wege-Luftklappe (ZP1) Modbus Register"
     description: "Updates the 3-Wege-Luftklappe (ZP1) holding register"
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id: input_select.drei_wege_luftklappe_zp1
-    condition: []
-    action:
-      - service: modbus.write_register
+    actions:
+      - action: modbus.write_register
         data:
           hub: "Maico KWL"
           slave: 1
@@ -1199,12 +1192,11 @@ automation:
   - id: "automation_zonenklappe_zp1_update"
     alias: "Update Zonenklappe (ZP1) Modbus Register"
     description: "Updates the Zonenklappe (ZP1) holding register"
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id: input_select.zonenklappe_zp1
-    condition: []
-    action:
-      - service: modbus.write_register
+    actions:
+      - action: modbus.write_register
         data:
           hub: "Maico KWL"
           slave: 1
